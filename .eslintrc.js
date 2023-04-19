@@ -12,6 +12,8 @@ module.exports = {
   rules: {
     // Custom rules here
     semi: ['error', 'never'],
+    'no-multi-spaces': ['error'],
+    'no-trailing-spaces': ['error'],
   },
   env: {
     browser: true,
