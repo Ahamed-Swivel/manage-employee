@@ -16,7 +16,7 @@ const NewEmployee = () => {
 
   useEffect(() => {
     setIsLoading(true)
-    id && getEmployee(id) 
+    id && getEmployee(id)
   }, [id])
 
   const getEmployee = async (id: string) => {

@@ -3,12 +3,13 @@ import axios from "axios"
 
 class EmployeeService {
   http = axios.create({
-    baseURL: 'http://localhost:4000/api'
+    baseURL: process.env.apiUrl
   })
 
   async getEmployees() {
     try {
       const response = await this.http.get<Employee[]>('/employees')
+
       return response.data
     } catch (error) {
       console.log(error)
@@ -18,6 +19,7 @@ class EmployeeService {
   async getEmployeeById(empId: string) {
     try {
       const response = await this.http.get<Employee>(`/employees/${empId}`)
+
       return response.data
     } catch (error) {
       console.log(error)
@@ -27,6 +29,7 @@ class EmployeeService {
   async addEmployee(data: Employee) {
     try {
       const response = await this.http.post<Employee>('/employees', {...data})
+
       return response.data
     } catch (error) {
       console.log(error)
@@ -36,6 +39,7 @@ class EmployeeService {
   async removeEmployee(empId: string) {
     try {
       const response = await this.http.delete(`/employees/${empId}`)
+
       return response.data
     } catch (error) {
       console.log(error)
@@ -45,6 +49,7 @@ class EmployeeService {
   async updateEmployee(empId: string, data: Employee) {
     try {
       const response = await this.http.patch(`/employees/${empId}`, data)
+
       return response.data
     } catch (error) {
       console.log(error)

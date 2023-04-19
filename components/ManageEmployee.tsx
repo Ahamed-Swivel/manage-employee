@@ -65,7 +65,7 @@ const ManageEmployee = ({ onSubmit, employee }: ManageEmployeeProps) => {
           </h3>
         </Col>
       </Row>
-      <Form noValidate validated={false}  className="mt-5" onSubmit={handleSubmit}>
+      <Form noValidate validated={false} className="mt-5" onSubmit={handleSubmit}>
         <Container >
           <Row className="mb-3">
             <Col md={{ span: 4, offset: 4 }}>
@@ -135,5 +135,5 @@ const ManageEmployee = ({ onSubmit, employee }: ManageEmployeeProps) => {
     </Container>
   )
 }
-
+  
 export default ManageEmployee
