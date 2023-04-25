@@ -1,7 +1,7 @@
 import { Container, Row, Col, Alert } from 'react-bootstrap'
 import { useRouter } from 'next/router'
 
-const Error = () => {
+const ErrorSplash = () => {
   const router = useRouter()
 
   return (
@@ -18,4 +18,4 @@ const Error = () => {
   )
 }
 
-export default Error
+export default ErrorSplash
