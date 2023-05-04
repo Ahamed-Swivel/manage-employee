@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 
 import Employee from '@/models/Employee'
 import employeeService from '@/services/employee'
-import ManageEmployee from '@/components/ManageEmployee'
+import ManageEmployee from '@/components/templates/ManageEmployee'
 
 const NewEmployee = () => {
   const router = useRouter()

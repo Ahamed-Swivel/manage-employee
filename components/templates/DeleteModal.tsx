@@ -1,5 +1,4 @@
-import React from 'react'
-import ConfirmationModal from './Modal'
+import Modal from '@/components/molecules/Modal'
 
 interface DeleteModalProps {
   isModalVisible: boolean;
@@ -8,7 +7,7 @@ interface DeleteModalProps {
 }
 
 const DeleteModal = ({onConfirm, onCancel, isModalVisible}: DeleteModalProps) =>
-  <ConfirmationModal
+  <Modal
     isModalVisible={isModalVisible}
     title="Confirm Delete"
     message="Are you sure you want to delete this employee?"

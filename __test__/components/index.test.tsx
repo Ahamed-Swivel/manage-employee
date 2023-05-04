@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
-import EmployeeCard from '@/components/EmployeeCards'
+import EmployeeCard from '@/components/templates/EmployeeCards'
 import Employee from '@/models/Employee'
-import EmployeeList from '@/components/EmployeeList'
-import ManageEmployee from '@/components/ManageEmployee'
+import EmployeeList from '@/components/templates/EmployeeList'
+import ManageEmployee from '@/components/templates/ManageEmployee'
 
 const dummyEmployee: Employee[] = [{
   id: "644127d23e6e56a2b8e8b91d",

@@ -1,9 +1,10 @@
-import { Card, Button, ListGroup, Col } from 'react-bootstrap'
+import { Card, ListGroup, Col } from 'react-bootstrap'
 import { useState } from 'react'
 import Link from 'next/link'
 
 import Employee from '@/models/Employee'
-import DeleteModal from './ConfirmationModal/DeleteModal'
+import DeleteModal from '@/components/templates/DeleteModal'
+import Button from '@/components/atoms/Button'
 
 interface EmployeeCardProps {
   employees: Employee[];
@@ -48,9 +49,9 @@ const EmployeeCard = ({ employees, onDelete }: EmployeeCardProps) => {
               <ListGroup.Item><Card.Text>{employee.gender === 'M' ? 'Male' : 'Female'}</Card.Text></ListGroup.Item>
               <ListGroup.Item>
                 <Link href={`/employee/update/${employee.id}`}>
-                  <Button variant="outline-primary" className="me-2">Update</Button>
+                  <Button variant="primary" className="me-2">Update</Button>
                 </Link>
-                <Button variant="outline-danger" onClick={() => {handleDelete(employee)}}>Delete</Button>
+                <Button variant="danger" onClick={() => {handleDelete(employee)}}>Delete</Button>
               </ListGroup.Item>
             </ListGroup>
           </Card>
