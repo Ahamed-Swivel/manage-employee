@@ -20,13 +20,15 @@ export default function Home({ employees }: EmployeeManagementProps) {
   const router = useRouter()
   const [isList, setIsList] = useState<boolean>(false)
 
-  const onDeleteConfirm = (employee: Employee) => {
+  const onDeleteConfirm = async (employee: Employee) => {
     employee?.id && deleteEmployee(employee.id)
   }
 
   const deleteEmployee = (id: string) => {
     employeeService.removeEmployee(id).then(() => {
       router.replace('/')
+    }).catch(error => {
+      console.log(error)
     })
   }
 
