@@ -1,6 +1,7 @@
 import Employee from "@/models/Employee"
 import axios from "axios"
 
+// This is a Legacy code service will be kept for future reference
 class EmployeeService {
   http = axios.create({
     baseURL: process.env.apiUrl
