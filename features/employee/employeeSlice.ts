@@ -10,7 +10,7 @@ type InitialState = {
   error: string
 }
 
-interface updateEmployeePayload {
+interface IUpdateEmployee {
   empId: string
   employee: Employee
 }
@@ -34,7 +34,7 @@ export const getEmployeeById = createAsyncThunk('employee/getEmployeeById', (emp
   return http.get<Employee>(`/employees/${empId}`).then(response => response.data)
 })
 
-export const updateEmployee = createAsyncThunk('employee/updateEmployee', (data: updateEmployeePayload) => {
+export const updateEmployee = createAsyncThunk('employee/updateEmployee', (data: IUpdateEmployee) => {
   return http.patch(`/employees/${data.empId}`, data.employee).then(response => response.data)
 })
 
