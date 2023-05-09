@@ -71,5 +71,5 @@ export async function getServerSideProps() {
   // Fetch all employees
   const employees: Employee[] | undefined = await employeeService.getEmployees()
 
-  return { props: { employees: employees || [] } }
+  return { props: { employees: employees ?? [] } }
 }

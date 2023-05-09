@@ -39,7 +39,7 @@ const EmployeeCard = ({ employees, onDelete }: EmployeeCardProps) => {
       {employees.map((employee) => (
         <Col md={3} key={employee.id}>
           <Card className='mt-3'>
-            <Card.Img variant="top" src={employee.photo || '/placeholder.png'} />
+            <Card.Img variant="top" src={employee.photo ?? '/placeholder.png'} />
             <Card.Body>
               <Card.Title>{`${employee.firstName} ${employee.lastName}`}</Card.Title>
             </Card.Body>
