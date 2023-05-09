@@ -16,12 +16,12 @@ const EmployeeForm = ({ onSubmit, employee }: EmployeeFormProps) => {
   const [validationResult, setValidationResult] = useState<string[]>([])
   const [isSubmitted, setIsSubmitted] = useState(false)
 
-  const [firstName, setFirstName] = useState(employee?.firstName || '')
-  const [lastName, setLastName] = useState(employee?.lastName || '')
-  const [email, setEmail] = useState(employee?.email || '')
-  const [number, setNumber] = useState(employee?.number || '')
-  const [gender, setGender] = useState(employee?.gender || 'M')
-  const [photo, setPhoto] = useState(employee?.photo || '')
+  const [firstName, setFirstName] = useState(employee?.firstName ?? '')
+  const [lastName, setLastName] = useState(employee?.lastName ?? '')
+  const [email, setEmail] = useState(employee?.email ?? '')
+  const [number, setNumber] = useState(employee?.number ?? '')
+  const [gender, setGender] = useState(employee?.gender ?? 'M')
+  const [photo, setPhoto] = useState(employee?.photo ?? '')
 
   useEffect(() => {
     const errors = validateForm({
