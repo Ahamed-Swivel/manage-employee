@@ -1,36 +1,42 @@
-import Head from 'next/head'
+import { useEffect } from 'react'
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 
 import Employee from '@/models/Employee'
-import employeeService from '@/services/employee'
 import ManageEmployee from '@/components/templates/ManageEmployee'
-import { useEffect, useState } from 'react'
+import { updateEmployee, getEmployeeById } from '@/features/employee/employeeSlice'
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
+import LoadingSpinner from '@/components/atoms/LoadingSpinner'
 
 const NewEmployee = () => {
-  const [employee, setEmployee] = useState<Employee>()
-  const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
+
+  const dispatch = useAppDispatch()
+  const employee = useAppSelector(state => state.employeeSlice.selectedEmployee)
+  const isLoading = useAppSelector(state => state.employeeSlice.loading)
+  const error = useAppSelector(state => state.employeeSlice.error)
 
   const { empId } = router.query
   const id = empId as string
 
   useEffect(() => {
-    setIsLoading(true)
     id && getEmployee(id)
   }, [id])
 
+  useEffect(() => {
+    error && router.replace(`/errorSplash?message=${error}`)
+  }, [error, router])
+
   const getEmployee = (id: string) => {
-    employeeService.getEmployeeById(id).then((employee) => {
-      setEmployee(employee)
-      setIsLoading(false)
-    }).catch(error => {
-      console.log(error)
-    })
+    dispatch(getEmployeeById(id))
   }
 
-  const updateEmployee = (employee: Employee) => {
-    employeeService.updateEmployee(id, employee).then(() => {
-      router.replace('/')
+  const update = (employee: Employee) => {
+    dispatch(updateEmployee({
+      empId: id,
+      employee: employee
+    })).then(() => {
+      router.replace('/', undefined, { shallow: true })
     }).catch(error => {
       console.log(error)
     })
@@ -42,9 +48,9 @@ const NewEmployee = () => {
         <title>Update employee</title>
       </Head>
       <main>
-        {isLoading && 'Loading...'}
+        {isLoading && <LoadingSpinner/>}
         {!employee && !isLoading && 'Employee not found'}
-        {!isLoading && employee && <ManageEmployee employee={employee} onSubmit={updateEmployee} />}
+        {!isLoading && employee && <ManageEmployee employee={employee} onSubmit={update} />}
       </main>
     </>
   )

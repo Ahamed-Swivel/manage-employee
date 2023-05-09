@@ -1,16 +1,19 @@
+import { useState, useEffect } from 'react'
 import Head from 'next/head'
-import { useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { Container, Row, Col, Stack } from 'react-bootstrap'
 import { FaListUl, FaThLarge } from 'react-icons/fa'
-import { useRouter } from 'next/router'
 
 import Employee from '@/models/Employee'
 import EmployeeCard from '@/components/templates/EmployeeCards'
 import EmployeeList from '@/components/templates/EmployeeList'
-import employeeService from '@/services/employee'
+import LoadingSpinner from '@/components/atoms/LoadingSpinner'
 import Button from '@/components/atoms/Button'
+import employeeService from '@/services/employee'
 import styles from '@/styles/Home.module.scss'
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
+import { populateEmployee, removeEmployee } from '@/features/employee/employeeSlice'
 
 interface EmployeeManagementProps {
   employees: Employee[] | []
@@ -20,16 +23,25 @@ export default function Home({ employees }: EmployeeManagementProps) {
   const router = useRouter()
   const [isList, setIsList] = useState<boolean>(false)
 
-  const onDeleteConfirm = (employee: Employee) => {
+  const dispatch = useAppDispatch()
+  const employeeFromStore = useAppSelector(state => state.employeeSlice.employees)
+  const isLoading = useAppSelector(state => state.employeeSlice.loading)
+  const error = useAppSelector(state => state.employeeSlice.error)
+
+  useEffect(() => {
+    dispatch(populateEmployee(employees))
+  }, [employees, dispatch])
+
+  useEffect(() => {
+    error && router.replace(`/errorSplash?message=${error}`)
+  }, [error, router])
+
+  const onDeleteConfirm = (employee: Employee): void => {
     employee?.id && deleteEmployee(employee.id)
   }
 
   const deleteEmployee = (id: string) => {
-    employeeService.removeEmployee(id).then(() => {
-      router.replace('/')
-    }).catch(error => {
-      console.log(error)
-    })
+    dispatch(removeEmployee(id))
   }
 
   const onToggle = () => {
@@ -41,6 +53,7 @@ export default function Home({ employees }: EmployeeManagementProps) {
       <Head>
           <title>Employee Management</title>
       </Head>
+      {isLoading && <LoadingSpinner/>}
       <main>
         <Container className='mt-5 mb-5'>
           <Row>
@@ -57,8 +70,8 @@ export default function Home({ employees }: EmployeeManagementProps) {
           <Row className='mt-5'>
             {
               isList
-                ? <EmployeeList employees={employees} onDelete={onDeleteConfirm}/>
-                : <EmployeeCard employees={employees} onDelete={onDeleteConfirm}/>
+                ? <EmployeeList employees={employeeFromStore || employees} onDelete={onDeleteConfirm}/>
+                : <EmployeeCard employees={employeeFromStore || employees} onDelete={onDeleteConfirm}/>
             }
           </Row>
         </Container>
