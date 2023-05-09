@@ -8,9 +8,10 @@ import ManageEmployee from '@/components/templates/ManageEmployee'
 const NewEmployee = () => {
   const router = useRouter()
 
-  const addNewEmployee = async (employee: Employee) => {
-    await employeeService.addEmployee(employee)
-    router.replace('/')
+  const addNewEmployee = (employee: Employee) => {
+    employeeService.addEmployee(employee).then(() => {
+      router.replace('/')
+    })
   }
 
   return (

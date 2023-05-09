@@ -19,16 +19,17 @@ const NewEmployee = () => {
     id && getEmployee(id)
   }, [id])
 
-  const getEmployee = async (id: string) => {
-    const employee: Employee | undefined = await employeeService.getEmployeeById(id)
-
-    setEmployee(employee)
-    setIsLoading(false)
+  const getEmployee = (id: string) => {
+    employeeService.getEmployeeById(id).then((employee) => {
+      setEmployee(employee)
+      setIsLoading(false)
+    })
   }
 
-  const updateEmployee = async (employee: Employee) => {
-    await employeeService.updateEmployee(id, employee)
-    router.replace('/')
+  const updateEmployee = (employee: Employee) => {
+    employeeService.updateEmployee(id, employee).then(() => {
+      router.replace('/')
+    })
   }
 
   return (
