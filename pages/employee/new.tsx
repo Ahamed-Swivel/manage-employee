@@ -11,6 +11,8 @@ const NewEmployee = () => {
   const addNewEmployee = (employee: Employee) => {
     employeeService.addEmployee(employee).then(() => {
       router.replace('/')
+    }).catch(error => {
+      console.log(error)
     })
   }
 

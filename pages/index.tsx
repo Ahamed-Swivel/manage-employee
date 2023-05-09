@@ -20,7 +20,7 @@ export default function Home({ employees }: EmployeeManagementProps) {
   const router = useRouter()
   const [isList, setIsList] = useState<boolean>(false)
 
-  const onDeleteConfirm = async (employee: Employee) => {
+  const onDeleteConfirm = (employee: Employee) => {
     employee?.id && deleteEmployee(employee.id)
   }
 

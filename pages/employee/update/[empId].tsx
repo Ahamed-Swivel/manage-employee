@@ -23,12 +23,16 @@ const NewEmployee = () => {
     employeeService.getEmployeeById(id).then((employee) => {
       setEmployee(employee)
       setIsLoading(false)
+    }).catch(error => {
+      console.log(error)
     })
   }
 
   const updateEmployee = (employee: Employee) => {
     employeeService.updateEmployee(id, employee).then(() => {
       router.replace('/')
+    }).catch(error => {
+      console.log(error)
     })
   }
 
