@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 
 import Employee from '@/models/Employee'
 import employeeService from '@/services/employee'
-import ManageEmployee from '@/components/ManageEmployee'
+import ManageEmployee from '@/components/templates/ManageEmployee'
 import { useEffect, useState } from 'react'
 
 const NewEmployee = () => {
@@ -19,16 +19,21 @@ const NewEmployee = () => {
     id && getEmployee(id)
   }, [id])
 
-  const getEmployee = async (id: string) => {
-    const employee: Employee | undefined = await employeeService.getEmployeeById(id)
-
-    setEmployee(employee)
-    setIsLoading(false)
+  const getEmployee = (id: string) => {
+    employeeService.getEmployeeById(id).then((employee) => {
+      setEmployee(employee)
+      setIsLoading(false)
+    }).catch(error => {
+      console.log(error)
+    })
   }
 
-  const updateEmployee = async (employee: Employee) => {
-    await employeeService.updateEmployee(id, employee)
-    router.replace('/')
+  const updateEmployee = (employee: Employee) => {
+    employeeService.updateEmployee(id, employee).then(() => {
+      router.replace('/')
+    }).catch(error => {
+      console.log(error)
+    })
   }
 
   return (

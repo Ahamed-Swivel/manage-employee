@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Button, Modal } from 'react-bootstrap'
+import { Button, Modal as BModal } from 'react-bootstrap'
 
 type VariantType = 'primary' | 'danger';
 
@@ -13,7 +13,7 @@ interface ConfirmationModalProps {
   onCancel: () => void;
 }
 
-const ConfirmationModal = ({ isModalVisible, title, message, confirmBtnText, variant='primary', onConfirm, onCancel }: ConfirmationModalProps) => {
+const Modal = ({ isModalVisible, title, message, confirmBtnText, variant='primary', onConfirm, onCancel }: ConfirmationModalProps) => {
   const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
@@ -31,21 +31,21 @@ const ConfirmationModal = ({ isModalVisible, title, message, confirmBtnText, var
   }
 
   return (
-    <Modal show={showModal} onHide={() => handleCancel()}>
-      <Modal.Header closeButton>
-        <Modal.Title>{title}</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>{message}</Modal.Body>
-      <Modal.Footer>
+    <BModal show={showModal} onHide={() => handleCancel()}>
+      <BModal.Header closeButton>
+        <BModal.Title>{title}</BModal.Title>
+      </BModal.Header>
+      <BModal.Body>{message}</BModal.Body>
+      <BModal.Footer>
         <Button variant="secondary" onClick={() => handleCancel()}>
           Cancel
         </Button>
         <Button variant={variant} onClick={handleConfirm}>
           {confirmBtnText}
         </Button>
-      </Modal.Footer>
-    </Modal>
+      </BModal.Footer>
+    </BModal>
   )
 }
 
-export default ConfirmationModal
+export default Modal

@@ -1,9 +1,10 @@
 import { useState } from 'react'
-import { Button, Table } from 'react-bootstrap'
+import { Table } from 'react-bootstrap'
 import Link from 'next/link'
 
 import Employee from '@/models/Employee'
-import DeleteModal from './ConfirmationModal/DeleteModal'
+import DeleteModal from '@/components/templates/DeleteModal'
+import Button from '@/components/atoms/Button'
 
 interface EmployeeListProps {
   employees: Employee[];
@@ -54,9 +55,9 @@ const EmployeeList = ({ employees, onDelete }: EmployeeListProps) => {
               <td>{employee.gender === 'M' ? 'Male' : 'Female'}</td>
               <td>
                 <Link href={`/employee/update/${employee.id}`}>
-                  <Button variant="outline-primary" className="me-2">Update</Button>
+                  <Button variant="primary" className="me-2">Update</Button>
                 </Link>
-                <Button variant="outline-danger" onClick={() => {handleDelete(employee)}}>Delete</Button>
+                <Button variant="danger" onClick={() => {handleDelete(employee)}}>Delete</Button>
               </td>
             </tr>
           ))}

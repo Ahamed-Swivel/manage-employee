@@ -2,7 +2,7 @@ import { render } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
 
-import DeleteModal from '@/components/ConfirmationModal/DeleteModal'
+import DeleteModal from '@/components/templates/DeleteModal'
 
 describe('Modal', () => {
   it('renders Delete modal', () => {
