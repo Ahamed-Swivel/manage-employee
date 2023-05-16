@@ -2,6 +2,7 @@ import axios from 'axios'
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 
 import Employee from '@/models/Employee'
+import { store } from '@/app/store'
 
 type InitialState = {
   loading: boolean
@@ -26,20 +27,33 @@ const http = axios.create({
   baseURL: process.env.apiUrl
 })
 
+const getHeaders = () => {
+  const state = store.getState()
+
+  return {
+    headers: {
+      Authorization: `Bearer ${state.authSlice.token}`,
+      Accept: "application/json, text/plain, */*",
+      Host: "localhost:4000",
+      Origin: "http://localhost:3000",
+    }
+  }
+}
+
 export const addNewEmployee = createAsyncThunk('employee/addNewEmployee', (employee: Employee) => {
-  return http.post<Employee>('/employees', {...employee}).then(response => response.data)
+  return http.post<Employee>('/employees', {...employee}, getHeaders()).then(response => response.data)
 })
 
 export const getEmployeeById = createAsyncThunk('employee/getEmployeeById', (empId: string) => {
-  return http.get<Employee>(`/employees/${empId}`).then(response => response.data)
+  return http.get<Employee>(`/employees/${empId}`, getHeaders()).then(response => response.data)
 })
 
 export const updateEmployee = createAsyncThunk('employee/updateEmployee', (data: IUpdateEmployee) => {
-  return http.patch(`/employees/${data.empId}`, data.employee).then(response => response.data)
+  return http.patch(`/employees/${data.empId}`, data.employee, getHeaders()).then(response => response.data)
 })
 
 export const removeEmployee = createAsyncThunk('employee/removeEmployee', (empId: string) => {
-  return http.delete(`/employees/${empId}`).then(response => response.data)
+  return http.delete(`/employees/${empId}`, getHeaders()).then(response => response.data)
 })
 
 const employeeSlice = createSlice({

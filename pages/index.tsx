@@ -10,16 +10,18 @@ import EmployeeCard from '@/components/templates/EmployeeCards'
 import EmployeeList from '@/components/templates/EmployeeList'
 import LoadingSpinner from '@/components/atoms/LoadingSpinner'
 import Button from '@/components/atoms/Button'
-import employeeService from '@/services/employee'
+import service from '@/services'
 import styles from '@/styles/Home.module.scss'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { populateEmployee, removeEmployee } from '@/features/employee/employeeSlice'
+import { storeToken } from '@/features/auth/authSlice'
 
 interface EmployeeManagementProps {
-  employees: Employee[] | []
+  employees: Employee[] | [],
+  token: string | undefined
 }
 
-export default function Home({ employees }: EmployeeManagementProps) {
+export default function Home({ employees, token }: EmployeeManagementProps) {
   const router = useRouter()
   const [isList, setIsList] = useState<boolean>(false)
 
@@ -30,6 +32,7 @@ export default function Home({ employees }: EmployeeManagementProps) {
 
   useEffect(() => {
     dispatch(populateEmployee(employees))
+    dispatch(storeToken({token}))
   }, [employees, dispatch])
 
   useEffect(() => {
@@ -81,8 +84,10 @@ export default function Home({ employees }: EmployeeManagementProps) {
 }
 
 export async function getServerSideProps() {
+  // Get token
+  const token: string | undefined = await service.getToken()
   // Fetch all employees
-  const employees: Employee[] | undefined = await employeeService.getEmployees()
+  const employees: Employee[] | undefined = await service.getEmployees(token)
 
-  return { props: { employees: employees ?? [] } }
+  return { props: { employees: employees ?? [], token } }
 }
